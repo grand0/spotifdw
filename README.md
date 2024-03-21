@@ -2,9 +2,10 @@
 foreign data wrapper for spotify. just for fun.
 
 ## usage
-you need to install [multicorn](https://github.com/Segfault-Inc/Multicorn) first (or [multicorn2](https://github.com/pgsql-io/multicorn2)).
+you need to install [multicorn](https://github.com/Segfault-Inc/Multicorn) first (or [multicorn2](https://github.com/pgsql-io/multicorn2)).  
+also install [spotipy](https://github.com/spotipy-dev/spotipy) library.
 
-then place `spotifdw.py` script to multicorn directory (in my case, the location was `/usr/local/lib/python3.10/dist-packages/multicorn/spotifdw.py`).
+then place [`spotifdw.py`](https://github.com/grand0/spotifdw/blob/master/spotifdw.py) script to multicorn directory (in my case, the location was `/usr/local/lib/python3.10/dist-packages/multicorn/spotifdw.py`).
 
 sql to create foreign table:
 ```sql
