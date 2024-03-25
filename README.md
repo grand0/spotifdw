@@ -2,33 +2,38 @@
 foreign data wrapper for spotify. just for fun.
 
 ## usage
-you need to install [multicorn](https://github.com/Segfault-Inc/Multicorn) first (or [multicorn2](https://github.com/pgsql-io/multicorn2)).  
-also install [spotipy](https://github.com/spotipy-dev/spotipy) library.
+dependencies:
+- [multicorn2](https://github.com/pgsql-io/multicorn2)  
+- [spotipy](https://github.com/spotipy-dev/spotipy)
 
-then place [`spotifdw.py`](https://github.com/grand0/spotifdw/blob/master/spotifdw.py) script to multicorn directory (in my case, the location was `/usr/local/lib/python3.10/dist-packages/multicorn/spotifdw.py`).
+to use script place [`spotifdw.py`](https://github.com/grand0/spotifdw/blob/master/spotifdw.py) script to multicorn directory (in my case, the location was `/usr/local/lib/python3.10/dist-packages/multicorn/spotifdw.py`).
 
-sql to create foreign table:
+sample sql script to create foreign table:
 ```sql
 create extension multicorn;
-create server spotifdw_srv
+create server spotifdw_track_srv
 	foreign data wrapper multicorn
 	options (
-		wrapper 'multicorn.spotifdw.spotifdw',
+		wrapper 'multicorn.spotifdw.spotifdw_get_track',
 		client_id 'YOUR_CLIENT_ID',
 		client_secret 'YOUR_CLIENT_SECRET'
 	);
-create foreign table spotifdw (
+create foreign table spotifdw_track (
 	id varchar,
 	full_name varchar,
 	duration_ms bigint,
 	explicit boolean,
-	preview_url varchar,
 	image_url varchar,
-	uri varchar
-) SERVER spotifdw_srv;
+	spotify_url varchar
+) SERVER spotifdw_track_srv;
 ```
 
 get track by its id:
 ```sql
-select * from spotifdw where id = '0Mfjy6p9vZsfzbQReWdooZ';
+select * from spotifdw_track where id = '0Mfjy6p9vZsfzbQReWdooZ';
+```
+
+search tracks:
+```sql
+select * from spotifdw_search where query = 'c418';
 ```
